@@ -23,7 +23,8 @@ requirejs: http://requirejs.org/docs/whyamd.html
 	//https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage
 
 	var domains = ['*'];
-	var tunnel = 'http://projects.bluetech.top/local-broadcast/broadcast.html';
+	// var tunnel = 'http://projects.bluetech.top/local-broadcast/broadcast.html';
+	var tunnel = 'https://shuise.github.io/local-broadcast/broadcast.html';
 	var tunnelDomain = new URL(tunnel).hostname;
 
 	var id = 'BetopBroadCast' + new Date().getTime();
