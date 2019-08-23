@@ -69,6 +69,7 @@ requirejs: http://requirejs.org/docs/whyamd.html
 			pipe = document.createElement('iframe');
 	    	pipe.id = id;
 	    	pipe.src = tunnel + '?domains=' + domains.join(',');
+	    	pipe.style.display = 'none';
 		}
 
 		document.body.appendChild(pipe);

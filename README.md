@@ -1,8 +1,7 @@
 # 说明
 
 1. broadcast.html 为广播通道
-2. 不同页面引用 broadcast.js，tunnel 值以实际部署为准
-3. gitpages link: https://shuise.github.io/local-broadcast/broadcast.js
+2. 每个页面引用 https://shuise.github.io/local-broadcast/broadcast.js
 
 ## 初始化说明
 
