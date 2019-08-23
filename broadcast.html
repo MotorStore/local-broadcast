@@ -1,0 +1,76 @@
+<script src="cache.js"></script>
+<script>
+/*
+本地双向通讯管理，基于 postMessage
+
+1. 业务页面加载白板时通过 biz 参数传入域
+2. 业务页面主叫白板，传入数据
+3. 白板页面根据信任域名接收参数并做处理
+*/
+
+var url = location.search;
+var biz = getPara(url, 'domains');
+
+window.addEventListener("message", receiveMessage, false);
+
+function receiveMessage(event){
+	// console.log('receiveMessage', event);
+	var origin = event.origin || event.originalEvent.origin; 
+
+	//去除协议和端口
+	origin = new URL(origin).hostname;
+	// origin = ',' + origin.split("//")[1].split(":")[0] + ',';
+
+	console.log(origin);
+	console.log(biz);
+
+	if (biz.indexOf(origin) == -1){
+		return;
+	}
+
+	console.log('receive form ' + biz);
+	// console.log(event.data);
+	var datas = event.data;
+
+	HG.cache.set('hg-broadcast', datas);
+
+	// window.addEventListener("storage", syncStorage, false);
+	window.onstorage = function(e) {
+		// console.log(e.key, e.newValue);
+		if(HG.cache.isSame('hg-broadcast', e.key)){
+			var data = HG.cache.get('hg-broadcast');
+			syncStorage(data);
+		}
+	};
+}
+
+function syncStorage(datas){
+	console.log(datas);
+	console.log(typeof datas);
+
+	var from = datas.from;
+	var data = datas.data;
+
+	parent.postMessage(data, '*');
+}
+
+//从地址栏获取传入的 domain
+function getPara(url,name){
+	// url = url.split("&apm;").join("&");
+	if(url == ''){
+		return '';
+	}
+
+	var v = '', _p = name + '=';
+
+	if(url.indexOf("&" + _p)>-1){
+		v = url.split("&" + _p)[1] || '';
+	}
+
+	if(url.indexOf("?" + _p)>-1){
+		v = url.split("?" + _p)[1] || '';
+	}
+	v = v.split("&")[0];
+	return v;
+}	
+</script>

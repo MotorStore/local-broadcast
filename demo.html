@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+
+<div id="show"></div>
+<button onclick="send()">send</button>
+
+	
+<script src="http://projects.bluetech.top/local-broadcast/broadcast.js"></script>	
+
+<script>
+var target = document.getElementById("show");
+broadcast.init({
+	domains: ['localhost','dev.jeff.com','projects.bluetech.top'],
+	receive: function(data){
+		target.innerHTML += '<br>' + JSON.stringify(data);
+	}
+});
+
+function send(){
+	broadcast.send('from demo.html' + (new Date().getTime()));
+}
+</script>
+</body>
+</html>
